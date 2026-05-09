@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Les Génies – Groupe de Cinéma | Bukavu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    /* ═══════════════════════════════════════
+       VARIABLES & RESET
+    ═══════════════════════════════════════ */
+    :root {
+      --blue:   #00AEEF;
+      --yellow: #F7D117;
+      --red:    #ED1C24;
+      --gold:   #FFD700;
+      --dark:   #080808;
+      --dark2:  #101010;
+      --dark3:  #181818;
+      --dark4:  #222;
+      --text:   #c8c8c8;
+      --glow-blue: rgba(0,174,239,0.4);
+      --glow-gold: rgba(255,215,0,0.4);
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      background:var(--dark);color:#fff;
+      font-family:'Rajdhani',sans-serif;
+      overflow-x:hidden;
+    }
+    ::selection{background:var(--blue);color:#000;}
+    ::-webkit-scrollbar{width:5px;}
+    ::-webkit-scrollbar-track{background:var(--dark);}
+    ::-webkit-scrollbar-thumb{background:var(--blue);border-radius:3px;}
+
+    /* ═══════════════════════════════════════
+       PARTICLES BACKGROUND
+    ═══════════════════════════════════════ */
+    #particles{
+      position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+    }
+    .particle{
+      position:absolute;border-radius:50%;
+      animation:float linear infinite;opacity:0;
+    }
+    @keyframes float{
+      0%{transform:translateY(100vh) rotate(0deg);opacity:0;}
+      10%{opacity:0.6;}
+      90%{opacity:0.3;}
+      100%{transform:translateY(-20px) rotate(720deg);opacity:0;}
+    }
+
+    /* ═══════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════ */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:1000;
+      background:rgba(8,8,8,0.95);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(0,174,239,0.25);
+      padding:0 5%;height:68px;
+      display:flex;align-items:center;justify-content:space-between;
+      transition:all 0.3s;
+    }
+    .nav-brand{
+      font-family:'Orbitron',sans-serif;
+      font-size:1.1rem;font-weight:900;
+      color:#fff;text-decoration:none;
+      display:flex;align-items:center;gap:12px;letter-spacing:3px;
+    }
+    .nav-logo-circle{
+      width:42px;height:42px;border-radius:50%;
+      background:linear-gradient(135deg,var(--blue),var(--yellow));
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.1rem;color:#000;font-weight:900;
+      box-shadow:0 0 15px var(--glow-blue);
+      flex-shrink:0;
+      overflow:hidden;
+    }
+    .nav-logo-circle img{
+      width:100%;height:100%;object-fit:cover;border-radius:50%;
+    }
+    .nav-links{display:flex;gap:0.2rem;list-style:none;align-items:center;}
+    .nav-links a{
+      color:var(--text);text-decoration:none;
+      font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;
+      padding:8px 16px;border-radius:4px;transition:all 0.3s;
+      font-weight:600;
+    }
+    .nav-links a:hover{color:var(--blue);background:rgba(0,174,239,0.08);}
+    .nav-links .btn-connect{
+      border:1px solid var(--blue);color:var(--blue);
+      border-radius:20px;padding:7px 20px;
+    }
+    .nav-links .btn-connect:hover{background:var(--blue);color:#000;}
+    .hamburger{
+      display:none;flex-direction:column;gap:5px;
+      background:none;border:none;cursor:pointer;
+    }
+    .hamburger span{display:block;width:22px;height:2px;background:var(--blue);transition:0.3s;}
+    .mobile-nav{
+      display:none;position:fixed;top:68px;left:0;right:0;
+      background:rgba(8,8,8,0.98);border-bottom:1px solid rgba(0,174,239,0.2);
+      padding:1rem 5%;z-index:999;flex-direction:column;gap:0.5rem;
+    }
+    .mobile-nav.open{display:flex;}
+    .mobile-nav a{
+      color:var(--text);text-decoration:none;padding:10px;
+      font-size:0.9rem;letter-spacing:2px;text-transform:uppercase;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
+    #accueil{
+      min-height:100vh;
+      display:flex;align-items:center;justify-content:center;
+      text-align:center;padding:100px 5% 60px;
+      position:relative;
+      background:
+        radial-gradient(ellipse at 20% 50%,rgba(0,174,239,0.12) 0%,transparent 60%),
+        radial-gradient(ellipse at 80% 30%,rgba(247,209,23,0.08) 0%,transparent 60%),
+        radial-gradient(ellipse at 50% 80%,rgba(237,28,36,0.08) 0%,transparent 50%),
+        var(--dark);
+    }
+    .hero-inner{position:relative;z-index:1;max-width:800px;}
+    .hero-icon{
+      width:130px;height:130px;border-radius:50%;margin:0 auto 30px;
+      background:linear-gradient(135deg,#000 0%,var(--dark3) 100%);
+      border:3px solid var(--blue);
+      display:flex;align-items:center;justify-content:center;
+      font-size:3.5rem;overflow:hidden;
+      box-shadow:0 0 30px var(--glow-blue),0 0 60px rgba(0,174,239,0.1);
+      animation:iconPulse 4s ease-in-out infinite;
+    }
+    .hero-icon img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+    @keyframes iconPulse{
+      0%,100%{box-shadow:0 0 30px var(--glow-blue);}
+      50%{box-shadow:0 0 60px rgba(0,174,239,0.6),0 0 100px rgba(0,174,239,0.2);}
+    }
+    .hero-title{
+      font-family:'Cinzel',serif;
+      font-size:clamp(2.5rem,8vw,5rem);
+      font-weight:900;line-height:1;
+      margin-bottom:1rem;
+      background:linear-gradient(135deg,#fff 30%,var(--blue) 60%,var(--yellow) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      background-clip:text;
+      animation:titleIn 1s ease both;
+    }
+    @keyframes titleIn{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+    .hero-sub{
+      font-family:'Orbitron',sans-serif;font-size:0.7rem;
+      letter-spacing:5px;color:var(--blue);
+      text-transform:uppercase;margin-bottom:1.5rem;
+      animation:titleIn 1s 0.2s ease both;
+    }
+    .slogan{
+      font-size:1.3rem;color:var(--yellow);font-style:italic;
+      font-weight:600;letter-spacing:2px;
+      text-shadow:0 0 20px rgba(247,209,23,0.5);
+      animation:glow 3s ease-in-out infinite;
+      margin-bottom:2.5rem;
+    }
+    @keyframes glow{
+      0%,100%{text-shadow:0 0 10px rgba(247,209,23,0.4);}
+      50%{text-shadow:0 0 30px rgba(247,209,23,0.9),0 0 60px rgba(247,209,23,0.3);}
+    }
+    .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;}
+    .btn-primary-g{
+      background:linear-gradient(135deg,var(--blue),#0080cc);
+      color:#fff;border:none;padding:13px 32px;border-radius:30px;
+      font-family:'Rajdhani',sans-serif;font-size:0.85rem;font-weight:700;
+      letter-spacing:2px;text-transform:uppercase;cursor:pointer;
+      box-shadow:0 5px 25px rgba(0,174,239,0.4);transition:all 0.3s;
+      text-decoration:none;display:inline-block;
+    }
+    .btn-primary-g:hover{transform:translateY(-3px);box-shadow:0 8px 35px rgba(0,174,239,0.6);}
+    .btn-outline-g{
+      background:transparent;color:var(--yellow);
+      border:1px solid var(--yellow);
+      padding:13px 32px;border-radius:30px;
+      font-family:'Rajdhani',sans-serif;font-size:0.85rem;font-weight:700;
+      letter-spacing:2px;text-transform:uppercase;cursor:pointer;
+      transition:all 0.3s;text-decoration:none;display:inline-block;
+    }
+    .btn-outline-g:hover{background:var(--yellow);color:#000;transform:translateY(-3px);}
+    .partner-box{
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(0,174,239,0.2);
+      border-left:4px solid var(--yellow);
+      border-radius:12px;padding:1.5rem 2rem;
+      text-align:left;max-width:620px;margin:0 auto;
+      font-size:0.95rem;line-height:1.9;color:var(--text);
+    }
+    .partner-box h4{color:var(--blue);font-family:'Orbitron',sans-serif;font-size:0.85rem;letter-spacing:2px;margin-bottom:1rem;}
+    .partner-box li{list-style:none;padding-left:0;margin-bottom:4px;}
+    .partner-box li::before{content:"✦ ";color:var(--yellow);}
+
+    /* ═══════════════════════════════════════
+       SECTION GÉNÉRIQUE
+    ═══════════════════════════════════════ */
+    section{padding:100px 5%;position:relative;z-index:1;}
+    .sec-label{
+      font-family:'Orbitron',sans-serif;font-size:0.65rem;
+      letter-spacing:5px;color:var(--blue);text-transform:uppercase;
+      display:block;margin-bottom:0.5rem;
+    }
+    .sec-title{
+      font-family:'Cinzel',serif;
+      font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;
+      color:#fff;margin-bottom:0.5rem;
+    }
+    .sec-title span{color:var(--yellow);}
+    .sec-line{
+      width:80px;height:3px;
+      background:linear-gradient(to right,var(--blue),var(--yellow));
+      border-radius:2px;margin:1rem 0 3rem;
+    }
+
+    /* ═══════════════════════════════════════
+       PROGRAMME
+    ═══════════════════════════════════════ */
+    #programme{background:var(--dark2);}
+    .programme-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:800px;}
+    @media(max-width:600px){.programme-grid{grid-template-columns:1fr;}}
+    .prog-card{
+      background:var(--dark3);
+      border:1px solid rgba(0,174,239,0.15);
+      border-top:3px solid var(--blue);
+      border-radius:12px;padding:1.5rem;
+      transition:all 0.4s;position:relative;overflow:hidden;
+    }
+    .prog-card::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg,rgba(0,174,239,0.05),transparent);
+      opacity:0;transition:0.3s;
+    }
+    .prog-card:hover::before{opacity:1;}
+    .prog-card:hover{border-color:rgba(0,174,239,0.4);transform:translateY(-5px);}
+    .prog-day{
+      font-family:'Orbitron',sans-serif;font-size:0.75rem;
+      color:var(--blue);letter-spacing:2px;text-transform:uppercase;
+      margin-bottom:0.5rem;display:flex;align-items:center;gap:8px;
+    }
+    .prog-time{
+      font-size:2rem;font-weight:700;color:#fff;
+      font-family:'Rajdhani',sans-serif;line-height:1;
+    }
+    .prog-time span{font-size:0.9rem;color:var(--text);font-weight:400;}
+    .regle-box{
+      background:rgba(237,28,36,0.08);
+      border:1px solid rgba(237,28,36,0.3);
+      border-left:4px solid var(--red);
+      border-radius:8px;padding:1rem 1.5rem;
+      margin-top:2rem;font-size:0.9rem;color:#ff9aa0;
+      max-width:800px;
+    }
+
+    /* ═══════════════════════════════════════
+       INSCRIPTION / LOCK
+    ═══════════════════════════════════════ */
+    #inscription{background:var(--dark);}
+    .lock-box{
+      max-width:420px;margin:0 auto;
+      background:var(--dark3);
+      border:1px solid rgba(0,174,239,0.2);
+      border-radius:16px;padding:2.5rem;text-align:center;
+    }
+    .lock-icon{
+      width:80px;height:80px;border-radius:50%;
+      background:rgba(0,174,239,0.1);
+      border:2px solid rgba(0,174,239,0.3);
+      display:flex;align-items:center;justify-content:center;
+      font-size:2rem;color:var(--blue);
+      margin:0 auto 1.5rem;
+    }
+    .lock-title{font-family:'Cinzel',serif;font-size:1.4rem;margin-bottom:0.5rem;}
+    .lock-sub{font-size:0.85rem;color:var(--text);margin-bottom:1.5rem;}
+    .input-field{
+      width:100%;background:rgba(255,255,255,0.05);
+      border:1px solid rgba(0,174,239,0.2);
+      border-radius:8px;padding:12px 16px;
+      color:#fff;font-family:'Rajdhani',sans-serif;font-size:1rem;
+      outline:none;transition:border-color 0.3s;margin-bottom:1rem;
+    }
+    .input-field:focus{border-color:var(--blue);box-shadow:0 0 10px rgba(0,174,239,0.15);}
+    .input-field::placeholder{color:rgba(255,255,255,0.3);}
+    select.input-field option{background:var(--dark3);}
+    .btn-genie{
+      width:100%;background:linear-gradient(135deg,var(--blue),#0060aa);
+      color:#fff;border:none;padding:14px;border-radius:30px;
+      font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;
+      letter-spacing:3px;text-transform:uppercase;cursor:pointer;
+      box-shadow:0 5px 20px rgba(0,174,239,0.3);transition:all 0.3s;
+    }
+    .btn-genie:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,174,239,0.5);}
+    .form-card{
+      max-width:680px;margin:0 auto;
+      background:var(--dark3);border:1px solid rgba(0,174,239,0.15);
+      border-radius:16px;padding:2.5rem;
+    }
+    .form-title{
+      font-family:'Cinzel',serif;font-size:1.6rem;
+      text-align:center;margin-bottom:2rem;color:#fff;
+    }
+    .form-title span{color:var(--blue);}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    @media(max-width:500px){.form-grid{grid-template-columns:1fr;}}
+    .form-group{display:flex;flex-direction:column;gap:6px;}
+    .form-label{
+      font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;
+      color:var(--blue);font-weight:600;
+    }
+    .form-group.full{grid-column:1/-1;}
+
+    /* ═══════════════════════════════════════
+       CARTE DE MEMBRE — DESIGN PREMIUM
+    ═══════════════════════════════════════ */
+    #preview-section{margin-top:3rem;}
+    .card-title-section{
+      font-family:'Cinzel',serif;font-size:1.4rem;
+      color:var(--yellow);text-align:center;margin-bottom:1.5rem;
+    }
+
+    /* Wrapper responsive */
+    .card-wrapper{
+      overflow-x:auto;
+      display:flex;
+      justify-content:center;
+      padding:1rem 0;
+    }
+
+    /* LA CARTE PRINCIPALE */
+    #card-to-save{
+      width:600px;height:380px;
+      position:relative;overflow:hidden;
+      border-radius:16px;
+      flex-shrink:0;
+      /* Fond dégradé cinématographique */
+      background:linear-gradient(135deg,#0a0a0f 0%,#0d1525 30%,#0a1a0f 60%,#1a0a08 100%);
+      box-shadow:0 20px 60px rgba(0,0,0,0.8),0 0 0 1px rgba(0,174,239,0.3);
+      font-family:'Rajdhani',sans-serif;
+    }
+
+    /* Motif géométrique de fond */
+    .card-bg-pattern{
+      position:absolute;inset:0;
+      background-image:
+        repeating-linear-gradient(60deg,rgba(0,174,239,0.04) 0,rgba(0,174,239,0.04) 1px,transparent 0,transparent 50%),
+        repeating-linear-gradient(-60deg,rgba(247,209,23,0.03) 0,rgba(247,209,23,0.03) 1px,transparent 0,transparent 50%);
+      background-size:30px 30px;
+    }
+
+    /* Orbes de lumière décoratifs */
+    .card-orb1{
+      position:absolute;width:200px;height:200px;border-radius:50%;
+      background:radial-gradient(circle,rgba(0,174,239,0.15) 0%,transparent 70%);
+      top:-60px;right:-40px;
+    }
+    .card-orb2{
+      position:absolute;width:150px;height:150px;border-radius:50%;
+      background:radial-gradient(circle,rgba(247,209,23,0.1) 0%,transparent 70%);
+      bottom:-30px;left:100px;
+    }
+    .card-orb3{
+      position:absolute;width:120px;height:120px;border-radius:50%;
+      background:radial-gradient(circle,rgba(237,28,36,0.08) 0%,transparent 70%);
+      top:80px;left:-20px;
+    }
+
+    /* HEADER CARTE */
+    .card-head{
+      position:absolute;top:0;left:0;right:0;height:65px;
+      background:linear-gradient(to right,rgba(0,0,0,0.9),rgba(0,30,60,0.85));
+      border-bottom:2px solid transparent;
+      border-image:linear-gradient(to right,var(--blue),var(--yellow),var(--red)) 1;
+      display:flex;align-items:center;padding:0 18px;gap:12px;
+      z-index:2;
+    }
+    .card-flag{
+      width:35px;height:22px;flex-shrink:0;
+      border:1px solid rgba(255,255,255,0.3);border-radius:2px;overflow:hidden;
+    }
+    /* Drapeau RDC : fond bleu ciel, diagonale rouge bordée de jaune, étoile jaune */
+    .card-flag-inner{
+      width:100%;height:100%;
+      background:#007FFF;
+      position:relative;overflow:hidden;
+    }
+    .flag-diagonal{
+      position:absolute;
+      top:-10px;left:-10px;right:-10px;bottom:-10px;
+      background:transparent;
+    }
+    .flag-diagonal::before{
+      content:'';position:absolute;
+      top:50%;left:0;right:0;height:6px;
+      background:#CC0000;
+      transform:translateY(-50%) rotate(-35deg) scaleX(2);
+      transform-origin:center;
+      border-top:1.5px solid #F7D117;
+      border-bottom:1.5px solid #F7D117;
+    }
+    /* Étoile jaune en haut à gauche */
+    .flag-star{
+      position:absolute;top:2px;left:3px;
+      width:7px;height:7px;background:var(--yellow);
+      clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+      z-index:2;
+    }
+    /* Drapeau RDC côté droit de la carte */
+    .card-flag-right{
+      width:35px;height:22px;flex-shrink:0;
+      border:1px solid rgba(255,255,255,0.3);border-radius:2px;overflow:hidden;
+    }
+    .card-flag-right-inner{
+      width:100%;height:100%;
+      background:#007FFF;
+      position:relative;overflow:hidden;
+    }
+    .card-flag-right-inner::before{
+      content:'';position:absolute;
+      top:50%;left:0;right:0;height:6px;
+      background:#CC0000;
+      transform:translateY(-50%) rotate(-35deg) scaleX(2);
+      transform-origin:center;
+      border-top:1.5px solid #F7D117;
+      border-bottom:1.5px solid #F7D117;
+    }
+    .card-flag-right-star{
+      position:absolute;top:2px;left:3px;
+      width:7px;height:7px;background:#F7D117;
+      clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+      z-index:2;
+    }
+    .card-head-text{flex:1;}
+    .card-head-org{
+      font-family:'Orbitron',sans-serif;font-size:7px;
+      letter-spacing:2px;color:rgba(255,255,255,0.5);
+      text-transform:uppercase;
+    }
+    .card-head-country{
+      font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;
+      color:var(--blue);letter-spacing:1px;text-transform:uppercase;line-height:1.2;
+    }
+    .card-head-sub{font-size:9px;color:var(--yellow);letter-spacing:1px;}
+    .card-cinema-badge{
+      background:linear-gradient(135deg,var(--blue),#004a80);
+      border:1px solid rgba(0,174,239,0.4);
+      border-radius:6px;padding:4px 10px;
+      font-family:'Orbitron',sans-serif;font-size:7px;
+      letter-spacing:1px;color:#fff;text-align:center;
+      line-height:1.5;
+    }
+
+    /* PHOTO */
+    .card-photo{
+      position:absolute;top:78px;left:18px;
+      width:130px;height:165px;
+      border:2px solid var(--blue);
+      border-radius:6px;overflow:hidden;
+      background:rgba(0,0,0,0.5);
+      box-shadow:0 0 20px rgba(0,174,239,0.4),0 4px 20px rgba(0,0,0,0.6);
+      z-index:2;
+    }
+    .card-photo-inner{
+      width:100%;height:100%;
+      background-color:#0a1020;
+      background-size:cover;
+      background-position:center top;
+      background-repeat:no-repeat;
+      display:flex;align-items:center;justify-content:center;
+      font-size:3rem;color:rgba(0,174,239,0.3);
+      image-rendering:-webkit-optimize-contrast;
+      image-rendering:crisp-edges;
+    }
+    .card-photo-frame{
+      position:absolute;inset:0;
+      background:linear-gradient(to bottom,transparent 80%,rgba(0,0,0,0.2));
+      z-index:1;pointer-events:none;
+    }
+    /* Coins décoratifs photo */
+    .photo-corner{position:absolute;width:10px;height:10px;}
+    .photo-corner.tl{top:0;left:0;border-top:2px solid var(--yellow);border-left:2px solid var(--yellow);}
+    .photo-corner.tr{top:0;right:0;border-top:2px solid var(--yellow);border-right:2px solid var(--yellow);}
+    .photo-corner.bl{bottom:0;left:0;border-bottom:2px solid var(--yellow);border-left:2px solid var(--yellow);}
+    .photo-corner.br{bottom:0;right:0;border-bottom:2px solid var(--yellow);border-right:2px solid var(--yellow);}
+
+    /* INFOS */
+    .card-info{
+      position:absolute;top:72px;left:165px;right:18px;
+      z-index:2;
+    }
+    .card-name-display{
+      font-family:'Cinzel',serif;
+      font-size:15px;font-weight:900;
+      color:#fff;line-height:1.2;margin-bottom:3px;
+      text-shadow:0 0 15px rgba(0,174,239,0.5);
+    }
+    .card-poste-badge{
+      display:inline-block;
+      background:linear-gradient(135deg,rgba(247,209,23,0.2),rgba(247,209,23,0.05));
+      border:1px solid rgba(247,209,23,0.4);
+      color:var(--yellow);font-size:9px;letter-spacing:2px;
+      padding:2px 10px;border-radius:10px;text-transform:uppercase;
+      margin-bottom:10px;
+    }
+
+    .card-info-row{
+      display:flex;align-items:baseline;gap:6px;
+      margin-bottom:5px;
+    }
+    .info-label{
+      font-size:8px;letter-spacing:2px;text-transform:uppercase;
+      color:var(--blue);font-weight:700;min-width:32px;
+    }
+    .info-value{
+      font-size:11px;color:rgba(255,255,255,0.85);font-weight:500;
+    }
+    .info-divider{
+      height:1px;
+      background:linear-gradient(to right,rgba(0,174,239,0.3),transparent);
+      margin:8px 0;
+    }
+
+    .card-id-row{
+      display:flex;align-items:center;gap:8px;margin-top:6px;
+    }
+    .card-id-label{font-size:7px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;}
+    .card-id-value{
+      font-family:'Orbitron',sans-serif;font-size:9px;
+      color:var(--yellow);letter-spacing:1px;
+    }
+
+    /* Filet décoratif latéral bleu */
+    .card-side-line{
+      position:absolute;left:155px;top:72px;bottom:55px;width:2px;
+      background:linear-gradient(to bottom,var(--blue),rgba(0,174,239,0.1));
+      z-index:2;
+    }
+
+    /* QR CODE */
+    .card-qr{
+      position:absolute;bottom:58px;right:18px;
+      width:75px;height:75px;z-index:2;
+      background:#fff;border-radius:4px;
+      padding:4px;
+      box-shadow:0 0 10px rgba(0,174,239,0.2);
+    }
+    .card-qr img{width:100%;height:100%;}
+    .card-qr-label{
+      position:absolute;bottom:42px;right:18px;
+      font-size:7px;color:rgba(255,255,255,0.4);letter-spacing:1px;
+      text-align:right;z-index:2;text-transform:uppercase;width:75px;
+    }
+
+    /* Bande décorative mi-carte */
+    .card-stripe{
+      position:absolute;top:250px;left:18px;right:18px;height:1px;
+      background:linear-gradient(to right,transparent,rgba(0,174,239,0.3),rgba(247,209,23,0.3),transparent);
+      z-index:2;
+    }
+
+    /* Texte cinéma watermark */
+    .card-watermark{
+      position:absolute;bottom:60px;left:0;right:0;
+      text-align:center;
+      font-family:'Orbitron',sans-serif;font-size:40px;font-weight:900;
+      color:rgba(0,174,239,0.04);letter-spacing:8px;text-transform:uppercase;
+      z-index:1;user-select:none;
+    }
+
+    /* FOOTER CARTE */
+    .card-foot{
+      position:absolute;bottom:0;left:0;right:0;height:48px;
+      display:flex;align-items:center;z-index:2;overflow:hidden;
+    }
+    .foot-band1{flex:3;height:100%;background:linear-gradient(135deg,var(--blue),#003a66);
+      display:flex;align-items:center;padding:0 16px;}
+    .foot-band2{flex:1;height:100%;background:linear-gradient(135deg,var(--yellow),#c8a800);
+      display:flex;align-items:center;justify-content:center;}
+    .foot-band3{flex:1;height:100%;background:linear-gradient(135deg,var(--red),#900010);
+      display:flex;align-items:center;justify-content:center;}
+    .foot-slogan{
+      font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;
+      color:rgba(255,255,255,0.9);letter-spacing:1.5px;text-transform:uppercase;
+      line-height:1.4;
+    }
+    .foot-icon{font-size:1.2rem;}
+
+    /* ═══════════════════════════════════════
+       BTN DOWNLOAD
+    ═══════════════════════════════════════ */
+    .btn-download{
+      background:linear-gradient(135deg,#1a8c3a,#0f5c26);
+      color:#fff;border:none;padding:14px 40px;border-radius:30px;
+      font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;
+      letter-spacing:2px;text-transform:uppercase;cursor:pointer;
+      box-shadow:0 5px 20px rgba(0,150,50,0.4);transition:all 0.3s;
+      margin-top:1.5rem;
+    }
+    .btn-download:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,150,50,0.6);}
+
+    .btn-send-email{
+      background:linear-gradient(135deg,var(--blue),#004a80);
+      color:#fff;border:none;padding:14px 40px;border-radius:30px;
+      font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;
+      letter-spacing:2px;text-transform:uppercase;cursor:pointer;
+      box-shadow:0 5px 20px rgba(0,174,239,0.4);transition:all 0.3s;
+      display:block;margin:0.8rem auto 0;
+    }
+    .btn-send-email:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,174,239,0.6);}
+
+    /* ═══════════════════════════════════════
+       FOOTER SITE
+    ═══════════════════════════════════════ */
+    footer{
+      background:var(--dark2);
+      border-top:1px solid rgba(0,174,239,0.15);
+      padding:60px 5% 30px;
+      position:relative;z-index:1;
+    }
+    .footer-top{
+      display:grid;grid-template-columns:2fr 1fr 1fr;
+      gap:3rem;margin-bottom:3rem;
+    }
+    @media(max-width:700px){.footer-top{grid-template-columns:1fr;gap:2rem;}}
+    .footer-brand-name{
+      font-family:'Orbitron',sans-serif;font-size:1.2rem;font-weight:900;
+      color:#fff;letter-spacing:3px;margin-bottom:0.8rem;
+    }
+    .footer-brand-name span{color:var(--blue);}
+    .footer-desc{font-size:0.9rem;color:var(--text);line-height:1.8;max-width:300px;}
+    .footer-col h4{
+      font-family:'Orbitron',sans-serif;font-size:0.65rem;letter-spacing:3px;
+      color:var(--blue);text-transform:uppercase;margin-bottom:1rem;
+    }
+    .footer-col a{
+      display:block;color:var(--text);text-decoration:none;
+      font-size:0.9rem;margin-bottom:0.5rem;transition:color 0.3s;
+    }
+    .footer-col a:hover{color:var(--yellow);}
+    .social-row{display:flex;gap:1rem;margin-top:1.5rem;}
+    .soc-btn{
+      width:44px;height:44px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.1rem;text-decoration:none;
+      border:1px solid rgba(255,255,255,0.1);
+      transition:all 0.3s;color:#fff;
+    }
+    .soc-btn:hover{transform:translateY(-5px);}
+    .soc-wa{background:rgba(37,211,102,0.15);border-color:rgba(37,211,102,0.3);}
+    .soc-wa:hover{background:#25D366;border-color:#25D366;}
+    .soc-yt{background:rgba(255,0,0,0.12);border-color:rgba(255,0,0,0.3);}
+    .soc-yt:hover{background:#FF0000;border-color:#FF0000;}
+    .soc-tt{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);}
+    .soc-tt:hover{background:#333;border-color:#fff;}
+    .soc-fb{background:rgba(24,119,242,0.12);border-color:rgba(24,119,242,0.3);}
+    .soc-fb:hover{background:#1877F2;border-color:#1877F2;}
+    .footer-bottom{
+      border-top:1px solid rgba(255,255,255,0.05);
+      padding-top:1.5rem;
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+    }
+    .footer-bottom p{font-size:0.82rem;color:rgba(200,200,200,0.4);}
+    .designer{color:var(--blue);font-weight:600;}
+    .heart{color:var(--red);animation:heartbeat 1.5s infinite;}
+    @keyframes heartbeat{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
+
+    /* ═══════════════════════════════════════
+       UTILITIES
+    ═══════════════════════════════════════ */
+    .hidden{display:none !important;}
+    .text-center{text-align:center;}
+    .mt-1{margin-top:0.5rem;}
+    .mt-2{margin-top:1rem;}
+    .mt-3{margin-top:2rem;}
+
+    /* ═══════════════════════════════════════
+       DÉCOR — LIGNES ANIMÉES DE FOND
+    ═══════════════════════════════════════ */
+    .deco-lines{
+      position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
+    }
+    .deco-line{
+      position:absolute;width:1px;height:100%;
+      background:linear-gradient(to bottom,transparent,rgba(0,174,239,0.07),transparent);
+      animation:lineMove 8s linear infinite;
+    }
+    .deco-line:nth-child(1){left:15%;animation-delay:0s;}
+    .deco-line:nth-child(2){left:35%;animation-delay:2s;background:linear-gradient(to bottom,transparent,rgba(247,209,23,0.05),transparent);}
+    .deco-line:nth-child(3){left:65%;animation-delay:4s;}
+    .deco-line:nth-child(4){left:85%;animation-delay:6s;background:linear-gradient(to bottom,transparent,rgba(237,28,36,0.04),transparent);}
+    @keyframes lineMove{0%{opacity:0;transform:translateY(-100%);}20%{opacity:1;}80%{opacity:1;}100%{opacity:0;transform:translateY(100%);}}
+
+    /* ═══════════════════════════════════════
+       DÉCOR — BADGE CINÉMA HERO
+    ═══════════════════════════════════════ */
+    .hero-badges{
+      display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
+      margin-bottom:2rem;
+    }
+    .hero-badge{
+      padding:4px 16px;border-radius:20px;
+      font-family:'Orbitron',sans-serif;font-size:0.6rem;letter-spacing:2px;
+      text-transform:uppercase;
+    }
+    .hb-blue{background:rgba(0,174,239,0.12);border:1px solid rgba(0,174,239,0.3);color:var(--blue);}
+    .hb-gold{background:rgba(247,209,23,0.1);border:1px solid rgba(247,209,23,0.3);color:var(--yellow);}
+    .hb-red{background:rgba(237,28,36,0.1);border:1px solid rgba(237,28,36,0.3);color:#ff6b6b;}
+
+    /* Stats dans le hero */
+    .hero-stats{
+      display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-top:2rem;
+    }
+    .stat-item{text-align:center;}
+    .stat-num{
+      font-family:'Orbitron',sans-serif;font-size:1.6rem;font-weight:900;
+      color:var(--blue);line-height:1;
+      text-shadow:0 0 20px rgba(0,174,239,0.5);
+    }
+    .stat-lbl{font-size:0.65rem;letter-spacing:2px;color:var(--text);text-transform:uppercase;margin-top:4px;}
+
+    /* Amélioration section programme */
+    #programme{
+      background:var(--dark2);
+      border-top:1px solid rgba(0,174,239,0.1);
+      border-bottom:1px solid rgba(0,174,239,0.1);
+    }
+    .prog-card{
+      background:var(--dark3);
+      border:1px solid rgba(0,174,239,0.15);
+      border-top:3px solid var(--blue);
+      border-radius:12px;padding:1.5rem;
+      transition:all 0.4s;position:relative;overflow:hidden;
+      backdrop-filter:blur(10px);
+    }
+    /* Amélioration form */
+    .form-card{
+      max-width:680px;margin:0 auto;
+      background:rgba(24,24,24,0.85);
+      border:1px solid rgba(0,174,239,0.2);
+      border-radius:20px;padding:2.5rem;
+      backdrop-filter:blur(20px);
+      box-shadow:0 20px 60px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    /* Amélioration section lock */
+    .lock-box{
+      max-width:420px;margin:0 auto;
+      background:rgba(16,16,16,0.9);
+      border:1px solid rgba(0,174,239,0.25);
+      border-radius:20px;padding:2.5rem;text-align:center;
+      backdrop-filter:blur(20px);
+      box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 40px rgba(0,174,239,0.05);
+    }
+
+    /* Trait lumineux sous le nav */
+    nav::after{
+      content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;
+      background:linear-gradient(to right,transparent,var(--blue),var(--yellow),var(--red),transparent);
+      opacity:0.5;
+    }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media(max-width:768px){
+      .nav-links{display:none;}
+      .hamburger{display:flex;}
+      section{padding:80px 5%;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- PARTICULES DE FOND -->
+<div id="particles"></div>
+<!-- LIGNES DÉCORATIVES -->
+<div class="deco-lines">
+  <div class="deco-line"></div>
+  <div class="deco-line"></div>
+  <div class="deco-line"></div>
+  <div class="deco-line"></div>
+</div>
+
+<!-- ═══════════ NAVBAR ═══════════ -->
+<nav id="navbar">
+  <a class="nav-brand" href="#">
+    <div class="nav-logo-circle"><img src="logo.jpg" alt="Les Génies" onerror="this.parentElement.innerHTML='🎬'"/></div>
+    LES GÉNIES
+  </a>
+  <ul class="nav-links">
+    <li><a href="#accueil">Accueil</a></li>
+    <li><a href="#programme">Programme</a></li>
+    <li><a href="#inscription">Inscription</a></li>
+    <li><a href="#" class="btn-connect" onclick="alert('Espace Membre bientôt disponible');return false;">Se Connecter</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" id="hamBtn">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MENU MOBILE -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#accueil" onclick="closeMenu()">Accueil</a>
+  <a href="#programme" onclick="closeMenu()">Programme</a>
+  <a href="#inscription" onclick="closeMenu()">Inscription</a>
+  <a href="#" onclick="alert('Bientôt disponible');closeMenu()">Se Connecter</a>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="accueil">
+  <div class="hero-inner">
+    <div class="hero-icon"><img src="logo.jpg" alt="Les Génies Logo" onerror="this.outerHTML='🎬'"/></div>
+    <div class="hero-sub">Groupe de Cinéma · Bukavu · RDC</div>
+    <h1 class="hero-title">LES GÉNIES</h1>
+    <div class="hero-badges">
+      <span class="hero-badge hb-blue">🎬 Cinéma</span>
+      <span class="hero-badge hb-gold">⭐ Talent</span>
+      <span class="hero-badge hb-red">🔥 Passion</span>
+    </div>
+    <p class="slogan">"Sacrifice, dans tout et partout"</p>
+    <div class="hero-btns">
+      <a href="#inscription" class="btn-primary-g"><i class="fas fa-id-card" style="margin-right:8px"></i>Ma Carte Membre</a>
+      <a href="#programme" class="btn-outline-g"><i class="fas fa-calendar-alt" style="margin-right:8px"></i>Programme</a>
+    </div>
+    <div class="partner-box">
+      <h4><i class="fas fa-handshake" style="margin-right:8px"></i>Soutenez la Culture avec Les Génies</h4>
+      Vous souhaitez booster votre visibilité tout en soutenant la jeunesse et l'art ? Devenez partenaire de notre prochain projet !
+      <ul style="margin-top:0.8rem">
+        <li>Votre logo sur nos affiches et réseaux sociaux</li>
+        <li>Une publicité directe auprès de notre public</li>
+        <li>L'image d'une entreprise qui soutient les talents locaux</li>
+      </ul>
+      <p style="margin-top:0.8rem;color:var(--yellow)">Ensemble, faisons rayonner la culture. <strong>Contactez-nous !</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PROGRAMME ═══════════ -->
+<section id="programme">
+  <span class="sec-label">✦ Planning hebdomadaire</span>
+  <h2 class="sec-title">Nos <span>Programmes</span></h2>
+  <div class="sec-line"></div>
+
+  <div class="programme-grid">
+    <div class="prog-card">
+      <div class="prog-day"><i class="fas fa-calendar-day"></i> Lundi</div>
+      <div class="prog-time">15:00 <span>→ 17:35</span></div>
+    </div>
+    <div class="prog-card">
+      <div class="prog-day"><i class="fas fa-calendar-day"></i> Mercredi</div>
+      <div class="prog-time">15:00 <span>→ 18:00</span></div>
+    </div>
+    <div class="prog-card">
+      <div class="prog-day"><i class="fas fa-calendar-day"></i> Vendredi</div>
+      <div class="prog-time">15:00 <span>→ 17:00</span></div>
+    </div>
+    <div class="prog-card" style="border-top-color:var(--yellow);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.5rem;">
+      <div style="font-size:2rem">🎭</div>
+      <div style="font-size:0.8rem;letter-spacing:2px;color:var(--yellow);text-align:center">LUNDI · MERCREDI · VENDREDI</div>
+    </div>
+  </div>
+
+  <div class="regle-box mt-3">
+    <i class="fas fa-mobile-alt" style="margin-right:8px"></i>
+    <strong>RÈGLE D'OR :</strong> Téléphones au secrétariat dès l'arrivée. Le respect est mutuel, même en dehors de la scène.
+  </div>
+</section>
+
+<!-- ═══════════ INSCRIPTION & CARTE ═══════════ -->
+<section id="inscription">
+  <span class="sec-label">✦ Espace Membre</span>
+  <h2 class="sec-title">Inscription &amp; <span>Carte</span></h2>
+  <div class="sec-line"></div>
+
+  <!-- VERROU -->
+  <div id="lock" class="lock-box">
+    <div class="lock-icon"><i class="fas fa-user-shield"></i></div>
+    <h3 class="lock-title">Accès Membre</h3>
+    <p class="lock-sub">Entrez le mot de passe officiel du groupe pour accéder au formulaire d'inscription.</p>
+    <input type="password" id="pass" class="input-field" placeholder="Mot de passe secret"
+      onkeypress="if(event.key==='Enter') unlock()"/>
+    <button class="btn-genie" onclick="unlock()">
+      <i class="fas fa-unlock-alt" style="margin-right:8px"></i>Entrer
+    </button>
+    <p class="mt-2" style="font-size:0.8rem;color:rgba(255,255,255,0.3)">Contactez le responsable pour obtenir le code.</p>
+  </div>
+
+  <!-- FORMULAIRE -->
+  <div id="form-site" class="hidden">
+    <div class="form-card">
+      <h3 class="form-title">Générer ma <span>Carte Officielle</span></h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Nom</label>
+          <input type="text" id="nom" class="input-field" placeholder="Ex: KABILA"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Prénom</label>
+          <input type="text" id="prenom" class="input-field" placeholder="Ex: Jean-Pierre"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Poste / Rôle</label>
+          <input type="text" id="poste" class="input-field" placeholder="Ex: Acteur, Réalisateur..."/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Téléphone</label>
+          <input type="tel" id="tel" class="input-field" placeholder="+243 000 000 000"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Sexe</label>
+          <select id="sexe" class="input-field">
+            <option value="Masculin">Masculin</option>
+            <option value="Féminin">Féminin</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Photo de profil</label>
+          <input type="file" id="imgInput" class="input-field" accept="image/*"/>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">📧 Adresse email (pour envoyer la carte)</label>
+          <input type="email" id="emailDest" class="input-field" placeholder="exemple@gmail.com"/>
+        </div>
+        <div class="form-group full">
+          <button class="btn-genie" onclick="generate()" style="letter-spacing:3px">
+            <i class="fas fa-id-card" style="margin-right:10px"></i>GÉNÉRER MA CARTE OFFICIELLE
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APERÇU CARTE -->
+  <div id="preview-section" class="hidden text-center">
+    <h3 class="card-title-section">⭐ Votre Carte de Membre Officielle ⭐</h3>
+
+    <div class="card-wrapper">
+      <!-- ══════════ CARTE ══════════ -->
+      <div id="card-to-save">
+
+        <!-- Fond & déco -->
+        <div class="card-bg-pattern"></div>
+        <div class="card-orb1"></div>
+        <div class="card-orb2"></div>
+        <div class="card-orb3"></div>
+        <div class="card-watermark">GÉNIES</div>
+
+        <!-- Header -->
+        <div class="card-head">
+          <div class="card-flag">
+            <div class="card-flag-inner">
+              <div class="flag-diagonal"></div>
+              <div class="flag-star"></div>
+            </div>
+          </div>
+          <div class="card-head-text">
+            <div class="card-head-org">République Démocratique du Congo</div>
+            <div class="card-head-country">Groupe Cinématographique</div>
+            <div class="card-head-sub">LES GÉNIES — CARTE DE MEMBRE OFFICIELLE</div>
+          </div>
+          <div class="card-cinema-badge">
+            🎬<br>CINÉMA<br>2026
+          </div>
+          <div class="card-flag-right" style="margin-left:8px">
+            <div class="card-flag-right-inner">
+              <div class="card-flag-right-star"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Photo -->
+        <div class="card-photo">
+          <div class="card-photo-inner" id="cardPhoto">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="card-photo-frame"></div>
+          <div class="photo-corner tl"></div>
+          <div class="photo-corner tr"></div>
+          <div class="photo-corner bl"></div>
+          <div class="photo-corner br"></div>
+        </div>
+
+        <!-- Ligne séparatrice latérale -->
+        <div class="card-side-line"></div>
+
+        <!-- Infos membre -->
+        <div class="card-info">
+          <div class="card-name-display" id="resNom">NOM COMPLET</div>
+          <div class="card-poste-badge" id="resPoste">Poste</div>
+
+          <div class="card-info-row">
+            <span class="info-label">Tél</span>
+            <span class="info-value" id="resTel">—</span>
+          </div>
+          <div class="card-info-row">
+            <span class="info-label">Sexe</span>
+            <span class="info-value" id="resSexe">—</span>
+          </div>
+          <div class="info-divider"></div>
+          <div class="card-id-row">
+            <span class="card-id-label">ID Officiel :</span>
+            <span class="card-id-value">GENIE-2026-<span id="resId">001</span></span>
+          </div>
+          <div class="card-id-row" style="margin-top:4px">
+            <span class="card-id-label">Bukavu · RDC</span>
+          </div>
+        </div>
+
+        <!-- Bande déco -->
+        <div class="card-stripe"></div>
+
+        <!-- QR Code -->
+        <div class="card-qr">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" alt="QR"/>
+        </div>
+        <div class="card-qr-label">Scannez pour<br>vérifier</div>
+
+        <!-- Footer carte -->
+        <div class="card-foot">
+          <div class="foot-band1">
+            <div class="foot-slogan">"SACRIFICE DANS TOUT ET PARTOUT"<br>+243 902 553 512</div>
+          </div>
+          <div class="foot-band2"><div class="foot-icon">⭐</div></div>
+          <div class="foot-band3"><div class="foot-icon">🎬</div></div>
+        </div>
+
+      </div>
+      <!-- ══════════ FIN CARTE ══════════ -->
+    </div>
+
+    <button class="btn-download" onclick="download()">
+      <i class="fas fa-download" style="margin-right:10px"></i>TÉLÉCHARGER LA CARTE (PNG)
+    </button>
+    <button class="btn-send-email" id="btnSendEmail" onclick="sendByEmail()" style="margin-top:0.8rem">
+      <i class="fas fa-paper-plane" style="margin-right:10px"></i>ENVOYER PAR EMAIL
+    </button>
+    <p class="mt-2" style="font-size:0.82rem;color:rgba(255,255,255,0.3)">Image HD · Prête à imprimer ou partager</p>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">LES <span>GÉNIES</span></div>
+      <p class="footer-desc">"Sacrifice, dans tout et partout" — Groupe de cinéma dédié à la promotion des talents et de la culture africaine depuis Bukavu, RDC.</p>
+      <div class="social-row">
+        <a href="https://wa.me/243902553512" target="_blank" class="soc-btn soc-wa"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" target="_blank" class="soc-btn soc-yt"><i class="fab fa-youtube"></i></a>
+        <a href="#" target="_blank" class="soc-btn soc-tt"><i class="fab fa-tiktok"></i></a>
+        <a href="#" target="_blank" class="soc-btn soc-fb"><i class="fab fa-facebook-f"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="#accueil">Accueil</a>
+      <a href="#programme">Programme</a>
+      <a href="#inscription">Inscription</a>
+      <a href="#">Partenariat</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="https://wa.me/243902553512"><i class="fab fa-whatsapp" style="margin-right:6px;color:#25D366"></i>+243 902 553 512</a>
+      <a href="#"><i class="fas fa-map-marker-alt" style="margin-right:6px;color:var(--red)"></i>Bukavu, RDC</a>
+      <a href="#"><i class="fas fa-film" style="margin-right:6px;color:var(--blue)"></i>Cinéma & Arts</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 <strong style="color:#fff">Les Génies Bukavu</strong> — Tous droits réservés.</p>
+    <p>
+      <i class="fas fa-code" style="color:var(--blue);margin-right:6px"></i>
+      Conçu avec <i class="fas fa-heart heart"></i> par
+      <span class="designer">Ciza Séraphin Balola</span>
+    </p>
+  </div>
+</footer>
+
+<!-- ═══════════ SCRIPTS ═══════════ -->
+<script>
+  /* ── PARTICULES ── */
+  (function(){
+    const container = document.getElementById('particles');
+    const colors = ['rgba(0,174,239,0.6)','rgba(247,209,23,0.4)','rgba(237,28,36,0.3)','rgba(255,255,255,0.2)'];
+    for(let i=0;i<30;i++){
+      const p = document.createElement('div');
+      p.className='particle';
+      const size = Math.random()*4+2;
+      p.style.cssText = `
+        left:${Math.random()*100}%;
+        width:${size}px;height:${size}px;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        animation-duration:${Math.random()*20+15}s;
+        animation-delay:${Math.random()*15}s;
+      `;
+      container.appendChild(p);
+    }
+  })();
+
+  /* ── MENU MOBILE ── */
+  function toggleMenu(){
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
+  function closeMenu(){
+    document.getElementById('mobileNav').classList.remove('open');
+  }
+
+  /* ── UNLOCK ── */
+  function unlock(){
+    const val = document.getElementById('pass').value;
+    if(val === "Genie+243C"){
+      document.getElementById('lock').classList.add('hidden');
+      document.getElementById('form-site').classList.remove('hidden');
+    } else {
+      document.getElementById('pass').style.borderColor='var(--red)';
+      document.getElementById('pass').style.boxShadow='0 0 10px rgba(237,28,36,0.3)';
+      setTimeout(()=>{
+        document.getElementById('pass').style.borderColor='';
+        document.getElementById('pass').style.boxShadow='';
+      },1500);
+      alert("❌ Mot de passe incorrect. Contactez le responsable.");
+    }
+  }
+
+  /* ── GENERATE ── */
+  let memberCounter = Math.floor(Math.random()*50)+1;
+  function generate(){
+    const nom = document.getElementById('nom').value.trim();
+    const prenom = document.getElementById('prenom').value.trim();
+    const poste = document.getElementById('poste').value.trim();
+    const tel = document.getElementById('tel').value.trim();
+    const sexe = document.getElementById('sexe').value;
+
+    if(!nom || !prenom){alert("Veuillez remplir au moins le Nom et le Prénom.");return;}
+
+    // Nom complet
+    document.getElementById('resNom').innerText = (nom+' '+prenom).toUpperCase();
+    document.getElementById('resPoste').innerText = poste || 'Membre';
+    document.getElementById('resTel').innerText = tel || '—';
+    document.getElementById('resSexe').innerText = sexe;
+    document.getElementById('resId').innerText = String(memberCounter++).padStart(3,'0');
+
+    // Photo
+    const file = document.getElementById('imgInput').files[0];
+    const photoEl = document.getElementById('cardPhoto');
+    if(file){
+      const reader = new FileReader();
+      reader.onload = e=>{
+        photoEl.style.backgroundImage=`url(${e.target.result})`;
+        photoEl.style.backgroundSize='cover';
+        photoEl.style.backgroundPosition='center top';
+        photoEl.style.backgroundRepeat='no-repeat';
+        photoEl.style.imageRendering='high-quality';
+        photoEl.innerHTML='';
+      };
+      reader.readAsDataURL(file);
+    } else {
+      photoEl.style.backgroundImage='none';
+      photoEl.innerHTML='<i class="fas fa-user"></i>';
+    }
+
+    // Afficher
+    document.getElementById('preview-section').classList.remove('hidden');
+    setTimeout(()=>document.getElementById('preview-section').scrollIntoView({behavior:'smooth'}),100);
+  }
+
+  /* ── DOWNLOAD ── */
+  function download(){
+    const card = document.getElementById('card-to-save');
+    html2canvas(card,{scale:3,useCORS:true,backgroundColor:null}).then(canvas=>{
+      const link = document.createElement('a');
+      link.download = 'Carte_Les_Genies_2026.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      setTimeout(()=>{
+        if(confirm("Carte téléchargée ! 🎉\nVoulez-vous nous contacter sur WhatsApp ?")){
+          window.open("https://wa.me/243902553512?text=Bonjour%2C%20j'ai%20g%C3%A9n%C3%A9r%C3%A9%20ma%20carte%20de%20membre%20Les%20G%C3%A9nies%20!","_blank");
+        }
+      },500);
+    });
+  }
+
+  /* ── ENVOYER PAR EMAIL ── */
+  function sendByEmail(){
+    const email = document.getElementById('emailDest').value.trim();
+    if(!email || !email.includes('@')){
+      alert("⚠️ Veuillez d'abord renseigner une adresse email valide dans le formulaire.");
+      document.getElementById('emailDest').focus();
+      return;
+    }
+    const card = document.getElementById('card-to-save');
+    const nom = document.getElementById('resNom').innerText;
+    html2canvas(card,{scale:3,useCORS:true,backgroundColor:null}).then(canvas=>{
+      canvas.toBlob(blob=>{
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'Carte_Les_Genies_2026.png';
+        link.click();
+        // Ouvrir le client mail avec le destinataire pré-rempli
+        const subject = encodeURIComponent('Carte de Membre Officielle – Les Génies 2026');
+        const body = encodeURIComponent(`Bonjour,\n\nVeuillez trouver ci-joint la carte de membre officielle de ${nom} pour le Groupe Cinématographique Les Génies – Bukavu, RDC.\n\n"Sacrifice, dans tout et partout"\n\n— Les Génies | +243 902 553 512`);
+        setTimeout(()=>{
+          window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+        }, 800);
+        alert(`✅ Carte téléchargée !\nVotre client email va s'ouvrir avec l'adresse : ${email}\n\nJoignez manuellement l'image téléchargée.`);
+      },'image/png');
+    });
+  }
+</script>
+</body>
+</html>
